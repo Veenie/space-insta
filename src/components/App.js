@@ -1,8 +1,8 @@
 
 import '../styles/App.scss';
 import React, { useState, useEffect } from "react";
-import Navigation from "./Navigation";
-import Cards from "./Cards";
+
+import Toggle from "./Toggle";
 
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
     async function fetchPhoto() {
       const res = await fetch(
-
+        `https://api.nasa.gov/planetary/apod?api_key=8EnwXPGooPzc8KPRAVObz3um51ufzyMVHgcToLS6`
       );
       const data = await res.json();
       setPhotoData(data);
@@ -25,14 +25,17 @@ function App() {
 
 
   return (
-    <div className="App">
-      <Navigation />
-      <main>
-        <div className="sub">
-          <Cards data={photoData}/>
-        </div>
-      </main>
- 
+    <div className="nasa-photo">
+        <img
+          src={photoData.url}
+          alt={photoData.title}
+          className="photo"
+        />
+      <div>
+        <h1>{photoData.title}</h1>
+        <p className="date">{photoData.date}</p>
+        <Toggle />
+      </div>
     </div>
   );
 }
